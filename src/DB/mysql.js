@@ -40,8 +40,7 @@ conMysql();
 function todos(tabla){
     return new Promise((resolve, reject) => {
         conexion.query(`SELECT * FROM ${tabla}`, (error, result) =>{
-            if(error) return reject(error);
-            resolve(result);           
+            return error ? reject(error):resolve(result);                      
             
         } );
     });
@@ -49,7 +48,12 @@ function todos(tabla){
 
 //funcion que nos traiga solo un elemento de la tabla
 function uno(tabla, id){
-
+    return new Promise((resolve, reject) => {
+        conexion.query(`SELECT * FROM ${tabla} WHERE id = ${id}`, (error, result) =>{
+            return error ? reject(error): resolve(result);                     
+            
+        } );
+    });
 }
 
 //funcion para actualizar y crear un registro
@@ -58,8 +62,13 @@ function agregar(tabla, data){
 }
 
 //funcion para eliminar
-function eliminar(tabla, id){
-
+function eliminar(tabla, data){
+    return new Promise((resolve, reject) => {
+        conexion.query(`DELETE * FROM ${tabla} WHERE id = ?`, data.id, (error, result) =>{
+            return error ? reject(error): resolve(result);                     
+            
+        } );
+    });
 }
 
 //exportamos
