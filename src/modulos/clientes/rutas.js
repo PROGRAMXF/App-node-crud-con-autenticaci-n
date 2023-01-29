@@ -6,8 +6,11 @@ const controlador = require('./controlador');
 const router = express.Router();
 
 router.get('/', function(req, res){
-    const todos = controlador.todos();
-    respuestas.success(req, res, todos, 200);
+    const todos = controlador.todos()
+    .then((items)=>{
+        respuestas.success(req, res, items, 200);
+    });
+    
 });
 
 module.exports = router;
