@@ -10,32 +10,32 @@ router.get("/:id", uno);
 router.put('/', eliminar);
 //-----------------------------------------------------------
 
-async function todos (req, res) {
+async function todos (req, res, next) {
   try{
     const items = await controlador.todos();
     respuestas.success(req, res, items, 200);
   }catch(err){
-    respuestas.error(req, res, err, 500);
+    next(err);
   }
   
 };
 
-async function uno (req, res) {
+async function uno (req, res, next) {
   try{
     const items = await controlador.uno(req.params.id);
     respuestas.success(req, res, items, 200);
   }catch(err){
-    respuestas.error(req, res, err, 500);
+    next(err);
   }
   
 };
 
-async function eliminar (req, res) {
+async function eliminar (req, res, next) {
   try{
     const items = await controlador.eliminar(req.body);
     respuestas.success(req, res, 'item eliminado satisfactoriamente', 200);
   }catch(err){
-    respuestas.error(req, res, err, 500);
+    next(err);
   }
   
 };
