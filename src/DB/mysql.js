@@ -55,10 +55,29 @@ function uno(tabla, id){
         } );
     });
 }
-
+function insertar(tabla, data){
+    return new Promise((resolve, reject) => {
+        conexion.query(`INSERT INTO ${tabla} SET ?`, data, (error, result) =>{
+            return error ? reject(error): resolve(result);                     
+            
+        } );
+    });
+}
+function actualizar(tabla, data){
+    return new Promise((resolve, reject) => {
+        conexion.query(`UPDATE ${tabla} SET ? WHERE id = ?`, [data, data.id], (error, result) =>{
+            return error ? reject(error): resolve(result);                     
+            
+        } );
+    });
+}
 //funcion para actualizar y crear un registro
 function agregar(tabla, data){
-
+if(data && data.id == 0){
+    return insertar(tabla, data);
+}else{
+    return actualizar(tabla, data);
+}
 }
 
 //funcion para eliminar
