@@ -73,6 +73,14 @@ function eliminar(tabla, data){
         } );
     });
 }
+function query(tabla, consulta){
+    return new Promise((resolve, reject) => {
+        conexion.query(`SELECT * FROM ${tabla} WHERE ?`, consulta, (error, result) =>{
+            return error ? reject(error): resolve(result[0]);                     
+            
+        } );
+    });
+}
 
 //exportamos
 module.exports = {
@@ -80,4 +88,5 @@ module.exports = {
     uno,
     agregar,
     eliminar,
+    query
 }
